@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Complaint Status</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        form {
+            display: inline-block;
+            text-align: left;
+        }
+        label, input {
+            display: block;
+            margin-top: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        .complaint-details {
+            margin-top: 30px;
+            text-align: left;
+        }
+    </style>
+    <script>
+        function checkStatus() {
+            const complaintID = document.getElementById('complaintID').value;
+            const complaints = JSON.parse(localStorage.getItem('complaints')) || [];
+            const complaint = complaints.find(c => c.id === complaintID);
+
+            if (complaint) {
+                document.getElementById('complaintDetails').innerHTML = `
+                    <h2>Complaint Details</h2>
+                    <p><strong>Complaint ID:</strong> ${complaint.id}</p>
+                    <p><strong>Name:</strong> ${complaint.name}</p>
+                    <p><strong>Location:</strong> ${complaint.location}</p>
+                    <p><strong>Problem:</strong> ${complaint.problem}</p>
+                    <p><strong>Status:</strong> ${complaint.status}</p>
+                `;
+            } else {
+                alert('Complaint not found. Please check the Complaint ID.');
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Check Complaint Status</h1>
+    <form onsubmit="return false;">
+        <label for="complaintID">Complaint ID:</label>
+        <input type="text" id="complaintID" name="complaintID" required>
+        
+        <button type="button" onclick="checkStatus()">Check Status</button>
+    </form>
+    <div id="complaintDetails" class="complaint-details"></div>
+</body>
+</html>

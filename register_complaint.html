@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Complaint</title>
+    <style>
+        /* Styles */
+    </style>
+</head>
+<body>
+    <h1>Register Complaint</h1>
+    <form id="complaintForm" enctype="multipart/form-data">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" required>
+        
+        <label for="problem">Problem:</label>
+        <textarea id="problem" name="problem" required></textarea>
+        
+        <label for="proof">Proof (Photo):</label>
+        <input type="file" id="proof" name="proof" accept="image/*" required>
+        
+        <button type="button" onclick="submitComplaint()">Submit Complaint</button>
+    </form>
+
+    <script>
+        function generateComplaintID() {
+            return 'C-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+        }
+
+        function submitComplaint() {
+            const name = document.getElementById('name').value;
+            const location = document.getElementById('location').value;
+            const problem = document.getElementById('problem').value;
+            const proof = document.getElementById('proof').files[0];
+            const complaintID = generateComplaintID();
+
+            if (!name || !location || !problem || !proof) {
+                alert('Please fill out all fields.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onloadend = function() {
+                const proofBase64 = reader.result;
+                const complaint = {
+                    id: complaintID,
+                    name,
+                    location,
+                    problem,
+                    proof: proofBase64,
+                    status: 'Pending'
+                };
+
+                let complaints = JSON.parse(localStorage.getItem('complaints')) || [];
+                complaints.push(complaint);
+                localStorage.setItem('complaints', JSON.stringify(complaints));
+
+                alert('Complaint submitted successfully with ID: ' + complaintID);
+                window.location.href = 'user_dashboard.html';
+            };
+
+            reader.readAsDataURL(proof);
+        }
+    </script>
+</body>
+</html>
+
+

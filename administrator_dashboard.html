@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrator Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .status-input {
+            width: 100px;
+        }
+        img {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Administrator Dashboard</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Complaint ID</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Problem</th>
+                <th>Proof</th>
+                <th>Status</th>
+                <th>Update Status</th>
+            </tr>
+        </thead>
+        <tbody id="complaintsTableBody">
+        </tbody>
+    </table>
+
+    <script>
+        function loadComplaints() {
+            const complaints = JSON.parse(localStorage.getItem('complaints')) || [];
+            const tableBody = document.getElementById('complaintsTableBody');
+            tableBody.innerHTML = '';
+
+            complaints.forEach((complaint, index) => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${complaint.id}</td>
+                    <td>${complaint.name}</td>
+                    <td>${complaint.location}</td>
+                    <td>${complaint.problem}</td>
+                    <td><img src="${complaint.proof}" alt="Proof"></td>
+                    <td>${complaint.status}</td>
+                    <td>
+                        <input type="text" class="status-input" value="${complaint.status}" id="status-${index}">
+                        <button onclick="updateStatus(${index})">Update</button>
+                    </td>
+                `;
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        function updateStatus(index) {
+            const statusInput = document.getElementById(`status-${index}`).value;
+            let complaints = JSON.parse(localStorage.getItem('complaints')) || [];
+
+            if (statusInput.toLowerCase() === 'pending' || statusInput.toLowerCase() === 'completed') {
+                complaints[index].status = statusInput.charAt(0).toUpperCase() + statusInput.slice(1).toLowerCase();
+                localStorage.setItem('complaints', JSON.stringify(complaints));
+                loadComplaints();
+                alert('Status updated successfully!');
+            } else {
+                alert('Invalid status. Please enter either "Pending" or "Completed".');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadComplaints);
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <style>
+        /* Styles */
+    </style>
+</head>
+<body>
+    <h1>User Dashboard</h1>
+    <button onclick="registerComplaint()">Register Complaint</button>
+    <button onclick="checkStatus()">Check Status</button>
+    <button onclick="giveFeedback()">Provide Feedback</button>
+
+    <script>
+        function registerComplaint() {
+            // Redirect to register complaint page
+            window.location.href = 'register_complaint.html';
+        }
+
+        function checkStatus() {
+            // Redirect to check status page
+            window.location.href = 'check_status.html';
+        }
+
+        function giveFeedback() {
+            // Redirect to feedback page
+            window.location.href = 'feedback.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        form {
+            display: inline-block;
+            text-align: left;
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 20px 10px 0;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function validateUserForm() {
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            const address = document.getElementById('address').value;
+            const locality = document.getElementById('locality').value;
+            const occupation = document.getElementById('occupation').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (!name || !phone || !email || !address || !locality || !occupation || !username || !password || !confirmPassword) {
+                alert('Please fill out all fields.');
+                return false;
+            }
+
+            const phonePattern = /^\d{10}$/;
+            if (!phonePattern.test(phone)) {
+                alert('Please enter a valid 10-digit phone number.');
+                return false;
+            }
+
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                alert('Please enter a valid email address.');
+                return false;
+            }
+
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters long.');
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match.');
+                return false;
+            }
+
+            // Simulate saving data
+            const userData = {
+                name,
+                phone,
+                email,
+                address,
+                locality,
+                occupation,
+                username,
+                password
+            };
+
+            localStorage.setItem('user_' + username, JSON.stringify(userData));
+			
+            
+            // Show confirmation message
+            alert('User registered successfully!');
+			localStorage.setItem('user_password_' + username, password);
+
+            // Redirect to first page
+            window.location.href = 'index.html';
+
+            return false; // Prevent form submission
+ 
+        }
+    </script>
+</head>
+<body>
+    <h1>User Registration</h1>
+    <form onsubmit="return validateUserForm()">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        
+        <label for="phone">Phone Number:</label>
+        <input type="text" id="phone" name="phone">
+        
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email">
+        
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address">
+        
+        <label for="locality">Locality:</label>
+        <input type="text" id="locality" name="locality">
+        
+        <label for="occupation">Occupation:</label>
+        <input type="text" id="occupation" name="occupation">
+        
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username">
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+        
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword">
+        
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

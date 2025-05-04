@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrator Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        form {
+            display: inline-block;
+            text-align: left;
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 20px 10px 0;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function validateAdminForm() {
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            const workerId = document.getElementById('workerId').value;
+            const address = document.getElementById('address').value;
+            const branch = document.getElementById('branch').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (!name || !phone || !email || !workerId || !address || !branch || !username || !password || !confirmPassword) {
+                alert('Please fill out all fields.');
+                return false;
+            }
+
+            const phonePattern = /^\d{10}$/;
+            if (!phonePattern.test(phone)) {
+                alert('Please enter a valid 10-digit phone number.');
+                return false;
+            }
+
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                alert('Please enter a valid email address.');
+                return false;
+            }
+
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters long.');
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match.');
+                return false;
+            }
+
+            // Simulate saving data
+            const adminData = {
+                name,
+                phone,
+                email,
+                workerId,
+                address,
+                branch,
+                username,
+                password
+            };
+
+            localStorage.setItem('admin_' + username, JSON.stringify(adminData));
+            alert('Administrator registered successfully!');
+			localStorage.setItem('admin_password_' + username, password);
+			window.location.href = 'page1.html';
+            return false;
+        }
+    </script>
+</head>
+<body>
+    <h1>Administrator Registration</h1>
+    <form onsubmit="return validateAdminForm()">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        
+        <label for="phone">Phone Number:</label>
+        <input type="text" id="phone" name="phone">
+        
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email">
+        
+        <label for="workerId">Worker ID:</label>
+        <input type="text" id="workerId" name="workerId">
+        
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address">
+        
+        <label for="branch">Branch:</label>
+        <input type="text" id="branch" name="branch">
+        
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username">
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+        
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword">
+        
+        <button type="submit">Submit
+<body>
+<html>

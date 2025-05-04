@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login</title>
+    <style>
+        /* Styles */
+    </style>
+    <script>
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Check if username exists
+            if (localStorage.getItem('user_' + username)) {
+                // Check if password matches
+                const storedPassword = localStorage.getItem('user_password_' + username);
+                if (password === storedPassword) {
+                    alert('Login successful as User!');
+                    window.location.href = 'user_dashboard.html'; // Redirect to user dashboard
+                } else {
+                    alert('Incorrect password.');
+                }
+            } else {
+                alert('User not found.');
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>User Login</h1>
+    <form>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username">
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+        
+        <button type="button" onclick="login()">Login</button>
+    </form>
+</body>
+</html>
